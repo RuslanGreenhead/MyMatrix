@@ -1,62 +1,62 @@
 #pragma once
 
 #include <iomanip> // input output manipulations
-#include <sstream> // чтобы работать со строками через интерфейс потоков
+#include <sstream> // С‡С‚РѕР±С‹ СЂР°Р±РѕС‚Р°С‚СЊ СЃРѕ СЃС‚СЂРѕРєР°РјРё С‡РµСЂРµР· РёРЅС‚РµСЂС„РµР№СЃ РїРѕС‚РѕРєРѕРІ
 
-const int g_interval = 2; // кол-во пробелов между элементами
+const int g_interval = 2; // РєРѕР»-РІРѕ РїСЂРѕР±РµР»РѕРІ РјРµР¶РґСѓ СЌР»РµРјРµРЅС‚Р°РјРё
 
-// смотрит из каких символов состоит каждый элемент первого столбца матрицы при выводе в поток и возвращает наибольшее кол-во символов.
+// СЃРјРѕС‚СЂРёС‚ РёР· РєР°РєРёС… СЃРёРјРІРѕР»РѕРІ СЃРѕСЃС‚РѕРёС‚ РєР°Р¶РґС‹Р№ СЌР»РµРјРµРЅС‚ РїРµСЂРІРѕРіРѕ СЃС‚РѕР»Р±С†Р° РјР°С‚СЂРёС†С‹ РїСЂРё РІС‹РІРѕРґРµ РІ РїРѕС‚РѕРє Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РЅР°РёР±РѕР»СЊС€РµРµ РєРѕР»-РІРѕ СЃРёРјРІРѕР»РѕРІ.
 template <typename T, typename Alloc>
 size_t el_size_first(const Matrix<T, Alloc>& object) {
-	std::stringstream ioss; // поток для одновременной работы с вводом и выводом
-	size_t size = 0; // сюда будем класть размер строки (т.е. кол-во символов)
+	std::stringstream ioss; // РїРѕС‚РѕРє РґР»СЏ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕР№ СЂР°Р±РѕС‚С‹ СЃ РІРІРѕРґРѕРј Рё РІС‹РІРѕРґРѕРј
+	size_t size = 0; // СЃСЋРґР° Р±СѓРґРµРј РєР»Р°СЃС‚СЊ СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё (С‚.Рµ. РєРѕР»-РІРѕ СЃРёРјРІРѕР»РѕРІ)
 	for (size_t row = 0; row < object.get_rows(); ++row) {
-		ioss << object(row, 0); // отправил элемент в поток
-		size = std::max(size, ioss.str().size()); // считал в строку всё, что есть буфере потока (получилась строка) и взял её размер (size())
-		ioss.str(""); // перезаписали в буфер потока пустую строку
+		ioss << object(row, 0); // РѕС‚РїСЂР°РІРёР» СЌР»РµРјРµРЅС‚ РІ РїРѕС‚РѕРє
+		size = std::max(size, ioss.str().size()); // СЃС‡РёС‚Р°Р» РІ СЃС‚СЂРѕРєСѓ РІСЃС‘, С‡С‚Рѕ РµСЃС‚СЊ Р±СѓС„РµСЂРµ РїРѕС‚РѕРєР° (РїРѕР»СѓС‡РёР»Р°СЃСЊ СЃС‚СЂРѕРєР°) Рё РІР·СЏР» РµС‘ СЂР°Р·РјРµСЂ (size())
+		ioss.str(""); // РїРµСЂРµР·Р°РїРёСЃР°Р»Рё РІ Р±СѓС„РµСЂ РїРѕС‚РѕРєР° РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ
 	}
 	return size;
 }
 
-// смотрит из каких символов состоит каждый элемент второго+ столбцов матрицы при выводе в поток и возвращает наибольшее кол-во символов.
+// СЃРјРѕС‚СЂРёС‚ РёР· РєР°РєРёС… СЃРёРјРІРѕР»РѕРІ СЃРѕСЃС‚РѕРёС‚ РєР°Р¶РґС‹Р№ СЌР»РµРјРµРЅС‚ РІС‚РѕСЂРѕРіРѕ+ СЃС‚РѕР»Р±С†РѕРІ РјР°С‚СЂРёС†С‹ РїСЂРё РІС‹РІРѕРґРµ РІ РїРѕС‚РѕРє Рё РІРѕР·РІСЂР°С‰Р°РµС‚ РЅР°РёР±РѕР»СЊС€РµРµ РєРѕР»-РІРѕ СЃРёРјРІРѕР»РѕРІ.
 template <typename T, typename Alloc>
 size_t el_size_else(const Matrix<T, Alloc>& object) {
-	std::stringstream ioss; // поток для одновременной работы с вводом и выводом
-	size_t size = 0; // сюда будем класть размер строки (т.е. кол-во символов)
+	std::stringstream ioss; // РїРѕС‚РѕРє РґР»СЏ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕР№ СЂР°Р±РѕС‚С‹ СЃ РІРІРѕРґРѕРј Рё РІС‹РІРѕРґРѕРј
+	size_t size = 0; // СЃСЋРґР° Р±СѓРґРµРј РєР»Р°СЃС‚СЊ СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё (С‚.Рµ. РєРѕР»-РІРѕ СЃРёРјРІРѕР»РѕРІ)
 	for (size_t row = 0; row < object.get_rows(); ++row) {
 		for (size_t column = 1; column < object.get_columns(); ++column) {
-			ioss << object(row, column); // отправил элемент в поток
-			size = std::max(size, ioss.str().size()); // считал в строку всё, что есть буфере потока (получилась строка) и взял её размер (size())
-			ioss.str(""); // перезаписали в буфер потока пустую строку
+			ioss << object(row, column); // РѕС‚РїСЂР°РІРёР» СЌР»РµРјРµРЅС‚ РІ РїРѕС‚РѕРє
+			size = std::max(size, ioss.str().size()); // СЃС‡РёС‚Р°Р» РІ СЃС‚СЂРѕРєСѓ РІСЃС‘, С‡С‚Рѕ РµСЃС‚СЊ Р±СѓС„РµСЂРµ РїРѕС‚РѕРєР° (РїРѕР»СѓС‡РёР»Р°СЃСЊ СЃС‚СЂРѕРєР°) Рё РІР·СЏР» РµС‘ СЂР°Р·РјРµСЂ (size())
+			ioss.str(""); // РїРµСЂРµР·Р°РїРёСЃР°Р»Рё РІ Р±СѓС„РµСЂ РїРѕС‚РѕРєР° РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ
 		}
 	}
 	return size;
 }
 
 //----------------------------------------------------------------------------------
-// Операторы:
+// РћРїРµСЂР°С‚РѕСЂС‹:
 
-// Оператор вывода в поток:
+// РћРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР° РІ РїРѕС‚РѕРє:
 template <typename T, typename Alloc>
 std::ostream& operator << (std::ostream& out, const Matrix<T, Alloc>& object) {
 	if (object.get_rows() == 0) return out << "|empty|\n";
-	size_t size_first = el_size_first(object); // количество символов для заполнения одного элемента в первом столбце
-	size_t size_else  = el_size_else(object) + g_interval; // количество символов для заполнения одного элемента в остальных столбцах
+	size_t size_first = el_size_first(object); // РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ РѕРґРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ РїРµСЂРІРѕРј СЃС‚РѕР»Р±С†Рµ
+	size_t size_else  = el_size_else(object) + g_interval; // РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ РґР»СЏ Р·Р°РїРѕР»РЅРµРЅРёСЏ РѕРґРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ РѕСЃС‚Р°Р»СЊРЅС‹С… СЃС‚РѕР»Р±С†Р°С…
 	for (size_t row = 0; row < object.get_rows(); ++row) {
 		out << '|';
-		for (size_t column = 0; column < object.get_columns(); ++column) { // остальные с отступом
+		for (size_t column = 0; column < object.get_columns(); ++column) { // РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃ РѕС‚СЃС‚СѓРїРѕРј
 			out << std::right;
 			if (column == 0)	out << std::setw(size_first);
 			else				out << std::setw(size_else);
 			out << object(row, column);
 		}
 		out << "|\n";
-		//if (row != object.get_rows() - 1) out << '\n'; // если строка не последняя, сделай отступ
+		//if (row != object.get_rows() - 1) out << '\n'; // РµСЃР»Рё СЃС‚СЂРѕРєР° РЅРµ РїРѕСЃР»РµРґРЅСЏСЏ, СЃРґРµР»Р°Р№ РѕС‚СЃС‚СѓРї
 	}
 	return out;
 }
 
-// Оператор суммирования двух матриц (разных типов)
+// РћРїРµСЂР°С‚РѕСЂ СЃСѓРјРјРёСЂРѕРІР°РЅРёСЏ РґРІСѓС… РјР°С‚СЂРёС† (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 template<typename T1, typename A1, typename T2, typename A2>
 auto operator+(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)->Matrix<decltype(T1() + T2())> {
 	if (obj1.get_rows() != obj2.get_rows() || obj1.get_columns() != obj2.get_columns())
@@ -67,7 +67,7 @@ auto operator+(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)->Matrix<d
 }
 
 
-// Оператор разности двух матриц (разных типов)
+// РћРїРµСЂР°С‚РѕСЂ СЂР°Р·РЅРѕСЃС‚Рё РґРІСѓС… РјР°С‚СЂРёС† (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 template<typename T1, typename A1, typename T2, typename A2>
 auto operator-(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2) -> Matrix<decltype(T1() - T2())> {
 	if (obj1.get_rows() != obj2.get_rows() || obj1.get_columns() != obj2.get_columns())
@@ -78,12 +78,12 @@ auto operator-(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2) -> Matrix
 }
 
 
-// Оператор перемножения двух матриц (разных типов)
+// РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРЅРѕР¶РµРЅРёСЏ РґРІСѓС… РјР°С‚СЂРёС† (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 template<typename T1, typename A1, typename T2, typename A2>
 auto operator*(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2) -> Matrix<decltype(T1()* T2() + T1() * T2())> {
 	if (obj1.get_columns() != obj2.get_rows())
 		throw std::runtime_error("Error: bad shapes for operator *!");
-	Matrix<decltype(T1()* T2() + T1() * T2())> obj_new(obj1.get_rows(), obj2.get_columns()); // пустая матрица, т.е. элементы которой построены с помощью дефолтных конструкторов
+	Matrix<decltype(T1()* T2() + T1() * T2())> obj_new(obj1.get_rows(), obj2.get_columns()); // РїСѓСЃС‚Р°СЏ РјР°С‚СЂРёС†Р°, С‚.Рµ. СЌР»РµРјРµРЅС‚С‹ РєРѕС‚РѕСЂРѕР№ РїРѕСЃС‚СЂРѕРµРЅС‹ СЃ РїРѕРјРѕС‰СЊСЋ РґРµС„РѕР»С‚РЅС‹С… РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ
 	for (size_t col = 0; col < obj2.get_columns(); ++col) {
 		for (size_t row = 0; row < obj1.get_rows(); ++row) {
 			for (size_t term = 0; term < obj1.get_columns(); ++term) {
@@ -91,13 +91,13 @@ auto operator*(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2) -> Matrix
 			}
 		}
 	}
-	// Matrix<decltype(T1()* T2() + T1() * T2())> obj_new(obj1);	// так тоже сработает, но зачем лишний раз создавать дубликат левой матрицы
-	// obj_new *= obj2;												// если *= всё равно перевыделит память => дубликат сотрётся
+	// Matrix<decltype(T1()* T2() + T1() * T2())> obj_new(obj1);	// С‚Р°Рє С‚РѕР¶Рµ СЃСЂР°Р±РѕС‚Р°РµС‚, РЅРѕ Р·Р°С‡РµРј Р»РёС€РЅРёР№ СЂР°Р· СЃРѕР·РґР°РІР°С‚СЊ РґСѓР±Р»РёРєР°С‚ Р»РµРІРѕР№ РјР°С‚СЂРёС†С‹
+	// obj_new *= obj2;												// РµСЃР»Рё *= РІСЃС‘ СЂР°РІРЅРѕ РїРµСЂРµРІС‹РґРµР»РёС‚ РїР°РјСЏС‚СЊ => РґСѓР±Р»РёРєР°С‚ СЃРѕС‚СЂС‘С‚СЃСЏ
 	return obj_new;
 }
 
 
-// Оператор перемножения числа на матрицу (разных типов)
+// РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРЅРѕР¶РµРЅРёСЏ С‡РёСЃР»Р° РЅР° РјР°С‚СЂРёС†Сѓ (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 template<typename T, typename Alloc, typename Other>
 inline auto operator*(const Other& value, const Matrix<T, Alloc>& obj)->Matrix<decltype(T()* Other())> {
 	Matrix<decltype(T()* Other())> obj_new(obj);
@@ -105,7 +105,7 @@ inline auto operator*(const Other& value, const Matrix<T, Alloc>& obj)->Matrix<d
 }
 
 
-// Оператор перемножения матрицы на число (разных типов)
+// РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРЅРѕР¶РµРЅРёСЏ РјР°С‚СЂРёС†С‹ РЅР° С‡РёСЃР»Рѕ (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 template<typename T, typename Alloc, typename Other>
 inline auto operator*(const Matrix<T, Alloc>& obj, const Other& value)->Matrix<decltype(T()* Other())> {
 	Matrix<decltype(T()* Other())> obj_new(obj);

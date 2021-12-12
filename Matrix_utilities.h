@@ -3,24 +3,24 @@
 #include "Matrix.h"
 
 //----------------------------------------------------------------------------------
-// Операторы:
+// РћРїРµСЂР°С‚РѕСЂС‹:
 
-template <typename T, typename Alloc> // Оператор вывода в поток
+template <typename T, typename Alloc> // РћРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР° РІ РїРѕС‚РѕРє
 std::ostream& operator << (std::ostream& out, const Matrix<T, Alloc>& object);
 
-template<typename T1, typename A1, typename T2, typename A2> // Оператор суммирования двух матриц (разных типов)
+template<typename T1, typename A1, typename T2, typename A2> // РћРїРµСЂР°С‚РѕСЂ СЃСѓРјРјРёСЂРѕРІР°РЅРёСЏ РґРІСѓС… РјР°С‚СЂРёС† (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 auto operator+(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)->Matrix<decltype(T1() + T2())>;
 
-template<typename T1, typename A1, typename T2, typename A2> // Оператор разности двух матриц (разных типов)
+template<typename T1, typename A1, typename T2, typename A2> // РћРїРµСЂР°С‚РѕСЂ СЂР°Р·РЅРѕСЃС‚Рё РґРІСѓС… РјР°С‚СЂРёС† (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 auto operator-(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)->Matrix<decltype(T1() - T2())>;
 
-template<typename T1, typename A1, typename T2, typename A2> // Оператор перемножения двух матриц (разных типов)
+template<typename T1, typename A1, typename T2, typename A2> // РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРЅРѕР¶РµРЅРёСЏ РґРІСѓС… РјР°С‚СЂРёС† (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 auto operator*(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)->Matrix<decltype(T1()* T2() + T1() * T2())>;
 
-template<typename T, typename Alloc, typename Other> // Оператор перемножения числа на матрицу (разных типов)
+template<typename T, typename Alloc, typename Other> // РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРЅРѕР¶РµРЅРёСЏ С‡РёСЃР»Р° РЅР° РјР°С‚СЂРёС†Сѓ (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 auto operator*(const Other& value, const Matrix<T, Alloc>& obj)->Matrix<decltype(T()* Other())>;
 
-template<typename T, typename Alloc, typename Other> // Оператор перемножения матрицы на число (разных типов)
+template<typename T, typename Alloc, typename Other> // РћРїРµСЂР°С‚РѕСЂ РїРµСЂРµРјРЅРѕР¶РµРЅРёСЏ РјР°С‚СЂРёС†С‹ РЅР° С‡РёСЃР»Рѕ (СЂР°Р·РЅС‹С… С‚РёРїРѕРІ)
 auto operator*(const Matrix<T, Alloc>& obj, const Other& value)->Matrix<decltype(T()* Other())>;
 
-#include "Matrix_utilites.hpp" // там находятся все реализации
+#include "Matrix_utilites.hpp" // С‚Р°Рј РЅР°С…РѕРґСЏС‚СЃСЏ РІСЃРµ СЂРµР°Р»РёР·Р°С†РёРё

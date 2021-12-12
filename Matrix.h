@@ -6,72 +6,72 @@
 template<typename T = double, typename Alloc=Allocator<T>>
 class Matrix {
 public:
-	template<typename Other, typename Alloc_Other> friend class Matrix; // Подружились с такими матрицами, чтобы пользоваться их внутренностями
+	template<typename Other, typename Alloc_Other> friend class Matrix; // РџРѕРґСЂСѓР¶РёР»РёСЃСЊ СЃ С‚Р°РєРёРјРё РјР°С‚СЂРёС†Р°РјРё, С‡С‚РѕР±С‹ РїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РёС… РІРЅСѓС‚СЂРµРЅРЅРѕСЃС‚СЏРјРё
 
-	// Дефолтный конструктор
+	// Р”РµС„РѕР»С‚РЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	explicit Matrix() noexcept {}
 
-	// Конструктор с 2 параметрами (матрица) c 1 параметром (вектор)
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ 2 РїР°СЂР°РјРµС‚СЂР°РјРё (РјР°С‚СЂРёС†Р°) c 1 РїР°СЂР°РјРµС‚СЂРѕРј (РІРµРєС‚РѕСЂ)
 	explicit Matrix(const size_t rows, const size_t columns = 1, Alloc alloc = Alloc()); 
 
-	// Инициализировать вектор (вертикальный столбец)
+	// РРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РІРµРєС‚РѕСЂ (РІРµСЂС‚РёРєР°Р»СЊРЅС‹Р№ СЃС‚РѕР»Р±РµС†)
 	template<typename Other> 
 	Matrix(std::initializer_list<Other> init_list, Alloc alloc = Alloc());
 
-	// Инициализировать матрицу initializer_list сосотящий из initializer_list
+	// РРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РјР°С‚СЂРёС†Сѓ initializer_list СЃРѕСЃРѕС‚СЏС‰РёР№ РёР· initializer_list
 	template<typename Other> 
 	Matrix(std::initializer_list<std::initializer_list<Other>> init_list, Alloc alloc = Alloc());
 
-	// Конструктор копирования
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 	Matrix(const Matrix& object);
 
-	// Конструктор копирования от матрицы другого типа
+	// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ РѕС‚ РјР°С‚СЂРёС†С‹ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 	template<typename Other, typename Alloc_Other> 
 	Matrix(const Matrix<Other, Alloc_Other>& object);
 
-	// Перемещающий конструктор
+	// РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	Matrix(Matrix&& object) noexcept; 
 
-	// Деструктор
+	// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 	~Matrix() noexcept; 
 
-	// Оператор присваивания копирующий
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РєРѕРїРёСЂСѓСЋС‰РёР№
 	Matrix& operator = (const Matrix& object);	
 
-	// Оператор присваивания копирующий от матрицы другого типа
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РєРѕРїРёСЂСѓСЋС‰РёР№ РѕС‚ РјР°С‚СЂРёС†С‹ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 	template<typename Other, typename Alloc_Other>
 	Matrix& operator = (const Matrix<Other, Alloc_Other>& object);
 
-	// Оператор присваивания перемещающий
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РїРµСЂРµРјРµС‰Р°СЋС‰РёР№
 	Matrix& operator = (Matrix&& object) noexcept;	
 	
-	// Оператор присваивающего суммирования c матрицей другого типа
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ СЃСѓРјРјРёСЂРѕРІР°РЅРёСЏ c РјР°С‚СЂРёС†РµР№ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 	template<typename Other, typename Alloc_Other>  
 	Matrix& operator += (const Matrix<Other, Alloc_Other>& object);
 
-	// Оператор присваивающего вычитания c матрицей другого типа
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ РІС‹С‡РёС‚Р°РЅРёСЏ c РјР°С‚СЂРёС†РµР№ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 	template<typename Other, typename Alloc_Other>  
 	Matrix& operator -= (const Matrix<Other, Alloc_Other>& object);
 
-	// Оператор присваивающего умножения на число другого типа
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ СѓРјРЅРѕР¶РµРЅРёСЏ РЅР° С‡РёСЃР»Рѕ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 	template<typename Other>  
 	Matrix& operator *= (const Other& value);
 
-	// Оператор присваивающего умножения на матрицу другого типа
+	// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ СѓРјРЅРѕР¶РµРЅРёСЏ РЅР° РјР°С‚СЂРёС†Сѓ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 	template<typename Other, typename Alloc_Other>
 	Matrix& operator *= (const Matrix<Other, Alloc_Other>& object);
 
-	// Унарные операторы сложения и вычитания:
+	// РЈРЅР°СЂРЅС‹Рµ РѕРїРµСЂР°С‚РѕСЂС‹ СЃР»РѕР¶РµРЅРёСЏ Рё РІС‹С‡РёС‚Р°РЅРёСЏ:
 	Matrix& operator + () { return *this; }
 	Matrix operator - () { return Matrix(*this) *= -1; }
 	
 	size_t get_columns() const noexcept { return m_columns; }
 	size_t get_rows() const noexcept { return m_rows; }
-	size_t size() const noexcept { return m_columns * m_rows; } // актуальное количество элементов матрицы
-	size_t capacity() const noexcept { return m_capacity; } // вместимость матрицы
+	size_t size() const noexcept { return m_columns * m_rows; } // Р°РєС‚СѓР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РјР°С‚СЂРёС†С‹
+	size_t capacity() const noexcept { return m_capacity; } // РІРјРµСЃС‚РёРјРѕСЃС‚СЊ РјР°С‚СЂРёС†С‹
 
-	T& operator() (size_t row, size_t column); // оператор вызова функции (принимает два аргумента будто [i][j])
-	const T& operator() (size_t row, size_t column) const; // оператор вызова функции для константной матрицы
+	T& operator() (size_t row, size_t column); // РѕРїРµСЂР°С‚РѕСЂ РІС‹Р·РѕРІР° С„СѓРЅРєС†РёРё (РїСЂРёРЅРёРјР°РµС‚ РґРІР° Р°СЂРіСѓРјРµРЅС‚Р° Р±СѓРґС‚Рѕ [i][j])
+	const T& operator() (size_t row, size_t column) const; // РѕРїРµСЂР°С‚РѕСЂ РІС‹Р·РѕРІР° С„СѓРЅРєС†РёРё РґР»СЏ РєРѕРЅСЃС‚Р°РЅС‚РЅРѕР№ РјР°С‚СЂРёС†С‹
 
 private:
 	T* m_ptr = nullptr;
@@ -80,4 +80,4 @@ private:
 	Alloc m_alloc = {};
 };
 
-#include "Matrix.hpp" // там находятся все реализации
+#include "Matrix.hpp" // С‚Р°Рј РЅР°С…РѕРґСЏС‚СЃСЏ РІСЃРµ СЂРµР°Р»РёР·Р°С†РёРё

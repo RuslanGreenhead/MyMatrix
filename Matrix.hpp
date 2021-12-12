@@ -1,59 +1,59 @@
 #include "Matrix.h"
 #pragma once
 
-// Конструктор с 2 параметрами
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ 2 РїР°СЂР°РјРµС‚СЂР°РјРё
 template<typename T, typename Alloc> 
 inline Matrix<T, Alloc>::Matrix(const size_t rows, const size_t columns, Alloc alloc) 
 	: m_alloc(alloc)
 {
-	T* ptr_temp = m_alloc.allocate(rows * columns); // Просто выделили память
-	size_t i = 0; // глобальный индекс (чтобы вне try использовать)
-	try { // с помощью него буду отслеживать на каком я конструкторе
-		for (; i < rows * columns; ++i) // размещающий new
-			m_alloc.construct(ptr_temp + i); // запускает дефолтный конструктор
+	T* ptr_temp = m_alloc.allocate(rows * columns); // РџСЂРѕСЃС‚Рѕ РІС‹РґРµР»РёР»Рё РїР°РјСЏС‚СЊ
+	size_t i = 0; // РіР»РѕР±Р°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ (С‡С‚РѕР±С‹ РІРЅРµ try РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ)
+	try { // СЃ РїРѕРјРѕС‰СЊСЋ РЅРµРіРѕ Р±СѓРґСѓ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РЅР° РєР°РєРѕРј СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
+		for (; i < rows * columns; ++i) // СЂР°Р·РјРµС‰Р°СЋС‰РёР№ new
+			m_alloc.construct(ptr_temp + i); // Р·Р°РїСѓСЃРєР°РµС‚ РґРµС„РѕР»С‚РЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	}
-	catch (...) { // в каком-то из конструкторов выбросилось исключение?!
-		for (size_t j = 0; j != i; ++j) // пройдёмся по всем уже созданным объектам
-			m_alloc.destroy(ptr_temp + j); // и запустим у них деструкторы
-		m_alloc.deallocate(ptr_temp); // освободим память
-		throw; // прокинем исключение дальше
+	catch (...) { // РІ РєР°РєРѕРј-С‚Рѕ РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ РІС‹Р±СЂРѕСЃРёР»РѕСЃСЊ РёСЃРєР»СЋС‡РµРЅРёРµ?!
+		for (size_t j = 0; j != i; ++j) // РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СѓР¶Рµ СЃРѕР·РґР°РЅРЅС‹Рј РѕР±СЉРµРєС‚Р°Рј
+			m_alloc.destroy(ptr_temp + j); // Рё Р·Р°РїСѓСЃС‚РёРј Сѓ РЅРёС… РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+		m_alloc.deallocate(ptr_temp); // РѕСЃРІРѕР±РѕРґРёРј РїР°РјСЏС‚СЊ
+		throw; // РїСЂРѕРєРёРЅРµРј РёСЃРєР»СЋС‡РµРЅРёРµ РґР°Р»СЊС€Рµ
 	}
-	// теперь память успешно выделена, можно её сохранить и поменять размер
+	// С‚РµРїРµСЂСЊ РїР°РјСЏС‚СЊ СѓСЃРїРµС€РЅРѕ РІС‹РґРµР»РµРЅР°, РјРѕР¶РЅРѕ РµС‘ СЃРѕС…СЂР°РЅРёС‚СЊ Рё РїРѕРјРµРЅСЏС‚СЊ СЂР°Р·РјРµСЂ
 	m_ptr = ptr_temp;
 	m_rows = rows;
 	m_columns = columns;
 	m_capacity = m_rows * m_columns;
 }
 
-// Инициализировать вектор (вертикальный столбец)
+// РРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РІРµРєС‚РѕСЂ (РІРµСЂС‚РёРєР°Р»СЊРЅС‹Р№ СЃС‚РѕР»Р±РµС†)
 template<typename T, typename Alloc>
 template<typename Other>
 inline Matrix<T, Alloc>::Matrix(std::initializer_list<Other> init_list, Alloc alloc)
 	: m_alloc(alloc)
 {
 	typedef std::initializer_list<Other>::const_iterator const_iter;
-	T* ptr_temp = m_alloc.allocate(init_list.size()); // Просто выделили память
-	size_t i = 0; // глобальный индекс (чтобы вне try использовать) 
-	try { // с помощью него буду отслеживать на каком я конструкторе
+	T* ptr_temp = m_alloc.allocate(init_list.size()); // РџСЂРѕСЃС‚Рѕ РІС‹РґРµР»РёР»Рё РїР°РјСЏС‚СЊ
+	size_t i = 0; // РіР»РѕР±Р°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ (С‡С‚РѕР±С‹ РІРЅРµ try РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ) 
+	try { // СЃ РїРѕРјРѕС‰СЊСЋ РЅРµРіРѕ Р±СѓРґСѓ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РЅР° РєР°РєРѕРј СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
 		for (const_iter c_it = std::cbegin(init_list); c_it != std::cend(init_list); ++c_it) {
-			m_alloc.construct(ptr_temp + i, *c_it); // запускает конструктор с параметрами
+			m_alloc.construct(ptr_temp + i, *c_it); // Р·Р°РїСѓСЃРєР°РµС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
 			++i;
 		}
 	}
-	catch (...) { // в каком-то из конструкторов выбросилось исключение?!
-		for (size_t j = 0; j != i; ++j) // пройдёмся по всем уже созданным объектам
-			m_alloc.destroy(ptr_temp + j); // и запустим у них деструкторы
-		m_alloc.deallocate(ptr_temp); // освободим память
-		throw; // прокинем исключение дальше
+	catch (...) { // РІ РєР°РєРѕРј-С‚Рѕ РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ РІС‹Р±СЂРѕСЃРёР»РѕСЃСЊ РёСЃРєР»СЋС‡РµРЅРёРµ?!
+		for (size_t j = 0; j != i; ++j) // РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СѓР¶Рµ СЃРѕР·РґР°РЅРЅС‹Рј РѕР±СЉРµРєС‚Р°Рј
+			m_alloc.destroy(ptr_temp + j); // Рё Р·Р°РїСѓСЃС‚РёРј Сѓ РЅРёС… РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+		m_alloc.deallocate(ptr_temp); // РѕСЃРІРѕР±РѕРґРёРј РїР°РјСЏС‚СЊ
+		throw; // РїСЂРѕРєРёРЅРµРј РёСЃРєР»СЋС‡РµРЅРёРµ РґР°Р»СЊС€Рµ
 	}
-	// теперь память успешно выделена, можно её сохранить и поменять размер
+	// С‚РµРїРµСЂСЊ РїР°РјСЏС‚СЊ СѓСЃРїРµС€РЅРѕ РІС‹РґРµР»РµРЅР°, РјРѕР¶РЅРѕ РµС‘ СЃРѕС…СЂР°РЅРёС‚СЊ Рё РїРѕРјРµРЅСЏС‚СЊ СЂР°Р·РјРµСЂ
 	m_ptr = ptr_temp;
 	m_rows = init_list.size();
 	m_columns = 1;
 	m_capacity = m_rows * m_columns;
 }
 
-// Инициализировать матрицу initializer_list сосотящий из initializer_list
+// РРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ РјР°С‚СЂРёС†Сѓ initializer_list СЃРѕСЃРѕС‚СЏС‰РёР№ РёР· initializer_list
 template<typename T, typename Alloc>
 template<typename Other>
 inline Matrix<T, Alloc>::Matrix(std::initializer_list<std::initializer_list<Other>> list_list, Alloc alloc)
@@ -66,152 +66,152 @@ inline Matrix<T, Alloc>::Matrix(std::initializer_list<std::initializer_list<Othe
 	for (const_iter_global c_it_gl = std::cbegin(list_list); c_it_gl != std::cend(list_list); ++c_it_gl) {
 		if (c_it_gl->size() != columns) throw std::runtime_error("Error: different size of columns in different rows!");
 	}
-	T* ptr_temp = m_alloc.allocate(rows * columns); // Просто выделили память
-	size_t i = 0; // глобальный индекс (чтобы вне try использовать) 
-	try { // с помощью него буду отслеживать на каком я конструкторе
+	T* ptr_temp = m_alloc.allocate(rows * columns); // РџСЂРѕСЃС‚Рѕ РІС‹РґРµР»РёР»Рё РїР°РјСЏС‚СЊ
+	size_t i = 0; // РіР»РѕР±Р°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ (С‡С‚РѕР±С‹ РІРЅРµ try РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ) 
+	try { // СЃ РїРѕРјРѕС‰СЊСЋ РЅРµРіРѕ Р±СѓРґСѓ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РЅР° РєР°РєРѕРј СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
 		for (const_iter_global c_it_gl = std::cbegin(list_list); c_it_gl != std::cend(list_list); ++c_it_gl) {
 			for (const_iter c_it = c_it_gl->begin(); c_it != c_it_gl->end(); ++c_it) {
-				m_alloc.construct(ptr_temp + i, *c_it); // запускает конструктор с параметрами
+				m_alloc.construct(ptr_temp + i, *c_it); // Р·Р°РїСѓСЃРєР°РµС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
 				++i;
 			}
 		}
 	}
-	catch (...) { // в каком-то из конструкторов выбросилось исключение?!
-		for (size_t j = 0; j != i; ++j) // пройдёмся по всем уже созданным объектам
-			m_alloc.destroy(ptr_temp + j); // и запустим у них деструкторы
-		m_alloc.deallocate(ptr_temp); // освободим память
-		throw; // прокинем исключение дальше
+	catch (...) { // РІ РєР°РєРѕРј-С‚Рѕ РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ РІС‹Р±СЂРѕСЃРёР»РѕСЃСЊ РёСЃРєР»СЋС‡РµРЅРёРµ?!
+		for (size_t j = 0; j != i; ++j) // РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СѓР¶Рµ СЃРѕР·РґР°РЅРЅС‹Рј РѕР±СЉРµРєС‚Р°Рј
+			m_alloc.destroy(ptr_temp + j); // Рё Р·Р°РїСѓСЃС‚РёРј Сѓ РЅРёС… РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+		m_alloc.deallocate(ptr_temp); // РѕСЃРІРѕР±РѕРґРёРј РїР°РјСЏС‚СЊ
+		throw; // РїСЂРѕРєРёРЅРµРј РёСЃРєР»СЋС‡РµРЅРёРµ РґР°Р»СЊС€Рµ
 	}
-	// теперь память успешно выделена, можно её сохранить и поменять размер
+	// С‚РµРїРµСЂСЊ РїР°РјСЏС‚СЊ СѓСЃРїРµС€РЅРѕ РІС‹РґРµР»РµРЅР°, РјРѕР¶РЅРѕ РµС‘ СЃРѕС…СЂР°РЅРёС‚СЊ Рё РїРѕРјРµРЅСЏС‚СЊ СЂР°Р·РјРµСЂ
 	m_ptr = ptr_temp;
 	m_rows = rows;
 	m_columns = columns;
 	m_capacity = m_rows * m_columns;
 }
 
-// Конструктор копирования
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 template<typename T, typename Alloc>
 inline Matrix<T, Alloc>::Matrix(const Matrix& object) 
 	: m_alloc(object.m_alloc)
 {
 	const size_t rows = object.get_rows();
 	const size_t columns = object.get_columns();
-	T* ptr_temp = m_alloc.allocate(rows * columns); // Просто выделили память
-	size_t i = 0; // глобальный индекс (чтобы вне try использовать) 
-	try { // с помощью него буду отслеживать на каком я конструкторе
+	T* ptr_temp = m_alloc.allocate(rows * columns); // РџСЂРѕСЃС‚Рѕ РІС‹РґРµР»РёР»Рё РїР°РјСЏС‚СЊ
+	size_t i = 0; // РіР»РѕР±Р°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ (С‡С‚РѕР±С‹ РІРЅРµ try РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ) 
+	try { // СЃ РїРѕРјРѕС‰СЊСЋ РЅРµРіРѕ Р±СѓРґСѓ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РЅР° РєР°РєРѕРј СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
 		for (size_t row = 0; row < rows; ++row) {
-			for (size_t column = 0; column < columns; ++column) { // размещающий new
-				m_alloc.construct(ptr_temp + i, object(row, column)); // запускает конструктор с параметрами
+			for (size_t column = 0; column < columns; ++column) { // СЂР°Р·РјРµС‰Р°СЋС‰РёР№ new
+				m_alloc.construct(ptr_temp + i, object(row, column)); // Р·Р°РїСѓСЃРєР°РµС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
 				++i;
 			}
 		}
 	}
-	catch (...) { // в каком-то из конструкторов выбросилось исключение?!
-		for (size_t j = 0; j != i; ++j) // пройдёмся по всем уже созданным объектам
-			m_alloc.destroy(ptr_temp + j); // и запустим у них деструкторы
-		m_alloc.deallocate(ptr_temp); // освободим память
-		throw; // прокинем исключение дальше
+	catch (...) { // РІ РєР°РєРѕРј-С‚Рѕ РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ РІС‹Р±СЂРѕСЃРёР»РѕСЃСЊ РёСЃРєР»СЋС‡РµРЅРёРµ?!
+		for (size_t j = 0; j != i; ++j) // РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СѓР¶Рµ СЃРѕР·РґР°РЅРЅС‹Рј РѕР±СЉРµРєС‚Р°Рј
+			m_alloc.destroy(ptr_temp + j); // Рё Р·Р°РїСѓСЃС‚РёРј Сѓ РЅРёС… РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+		m_alloc.deallocate(ptr_temp); // РѕСЃРІРѕР±РѕРґРёРј РїР°РјСЏС‚СЊ
+		throw; // РїСЂРѕРєРёРЅРµРј РёСЃРєР»СЋС‡РµРЅРёРµ РґР°Р»СЊС€Рµ
 	}
-	// теперь память успешно выделена, можно её сохранить и поменять размер
+	// С‚РµРїРµСЂСЊ РїР°РјСЏС‚СЊ СѓСЃРїРµС€РЅРѕ РІС‹РґРµР»РµРЅР°, РјРѕР¶РЅРѕ РµС‘ СЃРѕС…СЂР°РЅРёС‚СЊ Рё РїРѕРјРµРЅСЏС‚СЊ СЂР°Р·РјРµСЂ
 	m_ptr = ptr_temp;
 	m_rows = rows;
 	m_columns = columns;
 	m_capacity = m_rows * m_columns;
 }
 
-// Конструктор копирования от матрицы другого типа
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ РѕС‚ РјР°С‚СЂРёС†С‹ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 template<typename T, typename Alloc>
 template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>::Matrix(const Matrix<Other, Alloc_Other>& object) {
 	const size_t rows = object.get_rows();
 	const size_t columns = object.get_columns();
-	T* ptr_temp = m_alloc.allocate(rows * columns); // Просто выделили память
-	size_t i = 0; // глобальный индекс (чтобы вне try использовать)
-	try { // с помощью него буду отслеживать на каком я конструкторе
+	T* ptr_temp = m_alloc.allocate(rows * columns); // РџСЂРѕСЃС‚Рѕ РІС‹РґРµР»РёР»Рё РїР°РјСЏС‚СЊ
+	size_t i = 0; // РіР»РѕР±Р°Р»СЊРЅС‹Р№ РёРЅРґРµРєСЃ (С‡С‚РѕР±С‹ РІРЅРµ try РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ)
+	try { // СЃ РїРѕРјРѕС‰СЊСЋ РЅРµРіРѕ Р±СѓРґСѓ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РЅР° РєР°РєРѕРј СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРµ
 		for (size_t row = 0; row < rows; ++row) {
-			for (size_t column = 0; column < columns; ++column) { // размещающий new
-				m_alloc.construct(ptr_temp + i, static_cast<T>(object(row, column))); // запускает конструктор с параметрами
+			for (size_t column = 0; column < columns; ++column) { // СЂР°Р·РјРµС‰Р°СЋС‰РёР№ new
+				m_alloc.construct(ptr_temp + i, static_cast<T>(object(row, column))); // Р·Р°РїСѓСЃРєР°РµС‚ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
 				++i;
 			}
 		}
 	}
-	catch (...) { // в каком-то из конструкторов выбросилось исключение?!
-		for (size_t j = 0; j != i; ++j) // пройдёмся по всем уже созданным объектам
-			m_alloc.destroy(ptr_temp + j); // и запустим у них деструкторы
-		m_alloc.deallocate(ptr_temp); // освободим память
-		throw; // прокинем исключение дальше
+	catch (...) { // РІ РєР°РєРѕРј-С‚Рѕ РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ РІС‹Р±СЂРѕСЃРёР»РѕСЃСЊ РёСЃРєР»СЋС‡РµРЅРёРµ?!
+		for (size_t j = 0; j != i; ++j) // РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СѓР¶Рµ СЃРѕР·РґР°РЅРЅС‹Рј РѕР±СЉРµРєС‚Р°Рј
+			m_alloc.destroy(ptr_temp + j); // Рё Р·Р°РїСѓСЃС‚РёРј Сѓ РЅРёС… РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+		m_alloc.deallocate(ptr_temp); // РѕСЃРІРѕР±РѕРґРёРј РїР°РјСЏС‚СЊ
+		throw; // РїСЂРѕРєРёРЅРµРј РёСЃРєР»СЋС‡РµРЅРёРµ РґР°Р»СЊС€Рµ
 	}
-	// теперь память успешно выделена, можно её сохранить и поменять размер
+	// С‚РµРїРµСЂСЊ РїР°РјСЏС‚СЊ СѓСЃРїРµС€РЅРѕ РІС‹РґРµР»РµРЅР°, РјРѕР¶РЅРѕ РµС‘ СЃРѕС…СЂР°РЅРёС‚СЊ Рё РїРѕРјРµРЅСЏС‚СЊ СЂР°Р·РјРµСЂ
 	m_ptr = ptr_temp;
 	m_rows = rows;
 	m_columns = columns;
 	m_capacity = m_rows * m_columns;
 }
 
-// Перемещающий конструктор
+// РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 template<typename T, typename Alloc>
-inline Matrix<T, Alloc>::Matrix(Matrix&& object) noexcept {// исключения точно не вылетят (тут неоткуда)
+inline Matrix<T, Alloc>::Matrix(Matrix&& object) noexcept {// РёСЃРєР»СЋС‡РµРЅРёСЏ С‚РѕС‡РЅРѕ РЅРµ РІС‹Р»РµС‚СЏС‚ (С‚СѓС‚ РЅРµРѕС‚РєСѓРґР°)
 	std::swap(m_ptr, object.m_ptr);
 	std::swap(m_columns, object.m_columns);
 	std::swap(m_rows, object.m_rows);
 	std::swap(m_capacity, object.m_capacity);
 	std::swap(m_alloc, object.m_alloc);
-} // теперь во временном объекте наши старые ресурсы => они умрут снаружи
+} // С‚РµРїРµСЂСЊ РІРѕ РІСЂРµРјРµРЅРЅРѕРј РѕР±СЉРµРєС‚Рµ РЅР°С€Рё СЃС‚Р°СЂС‹Рµ СЂРµСЃСѓСЂСЃС‹ => РѕРЅРё СѓРјСЂСѓС‚ СЃРЅР°СЂСѓР¶Рё
 
-// Деструктор
+// Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
 template<typename T, typename Alloc>
 inline Matrix<T, Alloc>::~Matrix()noexcept {
-	for (size_t i = 0; i < m_rows * m_columns; ++i)// пройдёмся по всем своим объектам
-		m_alloc.destroy(m_ptr + i); // и запустим у них деструкторы
-	m_alloc.deallocate(m_ptr); // освободим память
+	for (size_t i = 0; i < m_rows * m_columns; ++i)// РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СЃРІРѕРёРј РѕР±СЉРµРєС‚Р°Рј
+		m_alloc.destroy(m_ptr + i); // Рё Р·Р°РїСѓСЃС‚РёРј Сѓ РЅРёС… РґРµСЃС‚СЂСѓРєС‚РѕСЂС‹
+	m_alloc.deallocate(m_ptr); // РѕСЃРІРѕР±РѕРґРёРј РїР°РјСЏС‚СЊ
 }
 
-// Оператор присваивания копирующий
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РєРѕРїРёСЂСѓСЋС‰РёР№
 template<typename T, typename Alloc>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator = (const Matrix& object) {
-	if (m_ptr == object.m_ptr) return *this; // Проверка на самоприсваивание
+	if (m_ptr == object.m_ptr) return *this; // РџСЂРѕРІРµСЂРєР° РЅР° СЃР°РјРѕРїСЂРёСЃРІР°РёРІР°РЅРёРµ
 	this->operator=<T, Alloc>(object);
 }
 
-// Оператор присваивания копирующий от матрицы другого типа
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РєРѕРїРёСЂСѓСЋС‰РёР№ РѕС‚ РјР°С‚СЂРёС†С‹ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 template<typename T, typename Alloc>
 template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator = (const Matrix<Other, Alloc_Other>& object) {
-	// Нет смысла делать проверку на самоприсваивание т.к. там матрица другого типа => она точно другая
-	if (object.size() > m_capacity) { // придётся перевыделять память
-		*this = Matrix(object); // скопировали объект во временный и своровали у него ресурсы с помощью перемещения
-		// теперь старые ресурсы нашего класса у временного и они подчистятся, когда закончится инструкция (т.е. уже тут)
+	// РќРµС‚ СЃРјС‹СЃР»Р° РґРµР»Р°С‚СЊ РїСЂРѕРІРµСЂРєСѓ РЅР° СЃР°РјРѕРїСЂРёСЃРІР°РёРІР°РЅРёРµ С‚.Рє. С‚Р°Рј РјР°С‚СЂРёС†Р° РґСЂСѓРіРѕРіРѕ С‚РёРїР° => РѕРЅР° С‚РѕС‡РЅРѕ РґСЂСѓРіР°СЏ
+	if (object.size() > m_capacity) { // РїСЂРёРґС‘С‚СЃСЏ РїРµСЂРµРІС‹РґРµР»СЏС‚СЊ РїР°РјСЏС‚СЊ
+		*this = Matrix(object); // СЃРєРѕРїРёСЂРѕРІР°Р»Рё РѕР±СЉРµРєС‚ РІРѕ РІСЂРµРјРµРЅРЅС‹Р№ Рё СЃРІРѕСЂРѕРІР°Р»Рё Сѓ РЅРµРіРѕ СЂРµСЃСѓСЂСЃС‹ СЃ РїРѕРјРѕС‰СЊСЋ РїРµСЂРµРјРµС‰РµРЅРёСЏ
+		// С‚РµРїРµСЂСЊ СЃС‚Р°СЂС‹Рµ СЂРµСЃСѓСЂСЃС‹ РЅР°С€РµРіРѕ РєР»Р°СЃСЃР° Сѓ РІСЂРµРјРµРЅРЅРѕРіРѕ Рё РѕРЅРё РїРѕРґС‡РёСЃС‚СЏС‚СЃСЏ, РєРѕРіРґР° Р·Р°РєРѕРЅС‡РёС‚СЃСЏ РёРЅСЃС‚СЂСѓРєС†РёСЏ (С‚.Рµ. СѓР¶Рµ С‚СѓС‚)
 	}
-	else { // иначе: вместимости моей матрицы хватит на актуальный размер объекта
-		size_t i = 0; // с помощью этого индекса пройдёмся по всем элементам
-		if (size() <= object.size()) { // т.е. актуальный размер имеющейся матрицы увеличится или не изменится
+	else { // РёРЅР°С‡Рµ: РІРјРµСЃС‚РёРјРѕСЃС‚Рё РјРѕРµР№ РјР°С‚СЂРёС†С‹ С…РІР°С‚РёС‚ РЅР° Р°РєС‚СѓР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ РѕР±СЉРµРєС‚Р°
+		size_t i = 0; // СЃ РїРѕРјРѕС‰СЊСЋ СЌС‚РѕРіРѕ РёРЅРґРµРєСЃР° РїСЂРѕР№РґС‘РјСЃСЏ РїРѕ РІСЃРµРј СЌР»РµРјРµРЅС‚Р°Рј
+		if (size() <= object.size()) { // С‚.Рµ. Р°РєС‚СѓР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ РёРјРµСЋС‰РµР№СЃСЏ РјР°С‚СЂРёС†С‹ СѓРІРµР»РёС‡РёС‚СЃСЏ РёР»Рё РЅРµ РёР·РјРµРЅРёС‚СЃСЏ
 			for (; i < size(); ++i)
-				m_ptr[i] = static_cast<T>(object.m_ptr[i]); // присваивание может выкинуть исключение, но это не нарушит целостность объекта
-			try { // нужно проконтролировать работу конструкторов у новых объектов
+				m_ptr[i] = static_cast<T>(object.m_ptr[i]); // РїСЂРёСЃРІР°РёРІР°РЅРёРµ РјРѕР¶РµС‚ РІС‹РєРёРЅСѓС‚СЊ РёСЃРєР»СЋС‡РµРЅРёРµ, РЅРѕ СЌС‚Рѕ РЅРµ РЅР°СЂСѓС€РёС‚ С†РµР»РѕСЃС‚РЅРѕСЃС‚СЊ РѕР±СЉРµРєС‚Р°
+			try { // РЅСѓР¶РЅРѕ РїСЂРѕРєРѕРЅС‚СЂРѕР»РёСЂРѕРІР°С‚СЊ СЂР°Р±РѕС‚Сѓ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ Сѓ РЅРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ
 				for (; i < object.size(); ++i)
 					m_alloc.construct(m_ptr + i, static_cast<T>(object.m_ptr[i]));
 			}
-			catch (...) { // если при создании новых объектов вылетело исключение, то эти новые надо разрушить
+			catch (...) { // РµСЃР»Рё РїСЂРё СЃРѕР·РґР°РЅРёРё РЅРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ РІС‹Р»РµС‚РµР»Рѕ РёСЃРєР»СЋС‡РµРЅРёРµ, С‚Рѕ СЌС‚Рё РЅРѕРІС‹Рµ РЅР°РґРѕ СЂР°Р·СЂСѓС€РёС‚СЊ
 				for (size_t j = size(); j != i; ++j)
-					m_alloc.destroy(m_ptr + j); // запуск деструкторов
+					m_alloc.destroy(m_ptr + j); // Р·Р°РїСѓСЃРє РґРµСЃС‚СЂСѓРєС‚РѕСЂРѕРІ
 				throw;
 			}
 		}
-		else { // т.е. актуальный размер имеющейся матрицы уменьшится
+		else { // С‚.Рµ. Р°РєС‚СѓР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ РёРјРµСЋС‰РµР№СЃСЏ РјР°С‚СЂРёС†С‹ СѓРјРµРЅСЊС€РёС‚СЃСЏ
 			for (; i < object.size(); ++i)
 				m_ptr[i] = static_cast<T>(object.m_ptr[i]);
-			for (; i < size(); ++i) // не нужно контролировать работу деструкторов т.к. они не должны выкидывать исключения
-				m_alloc.destroy(m_ptr + i); // разрушим не нужные нам элементы
+			for (; i < size(); ++i) // РЅРµ РЅСѓР¶РЅРѕ РєРѕРЅС‚СЂРѕР»РёСЂРѕРІР°С‚СЊ СЂР°Р±РѕС‚Сѓ РґРµСЃС‚СЂСѓРєС‚РѕСЂРѕРІ С‚.Рє. РѕРЅРё РЅРµ РґРѕР»Р¶РЅС‹ РІС‹РєРёРґС‹РІР°С‚СЊ РёСЃРєР»СЋС‡РµРЅРёСЏ
+				m_alloc.destroy(m_ptr + i); // СЂР°Р·СЂСѓС€РёРј РЅРµ РЅСѓР¶РЅС‹Рµ РЅР°Рј СЌР»РµРјРµРЅС‚С‹
 		}
-		// актуальные размеры матрицы изменились:
+		// Р°РєС‚СѓР°Р»СЊРЅС‹Рµ СЂР°Р·РјРµСЂС‹ РјР°С‚СЂРёС†С‹ РёР·РјРµРЅРёР»РёСЃСЊ:
 		m_rows = object.get_rows();
 		m_columns = object.get_columns();
-		// НО capactiy не изменилось т.к. память не перевыделяли
+		// РќРћ capactiy РЅРµ РёР·РјРµРЅРёР»РѕСЃСЊ С‚.Рє. РїР°РјСЏС‚СЊ РЅРµ РїРµСЂРµРІС‹РґРµР»СЏР»Рё
 	}
 	return *this;
 }
 
-// Оператор присваивания перемещающий 
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ РїРµСЂРµРјРµС‰Р°СЋС‰РёР№ 
 template<typename T, typename Alloc>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator = (Matrix&& object) noexcept {
 	std::swap(m_ptr, object.m_ptr);
@@ -220,9 +220,9 @@ inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator = (Matrix&& object) noexcept
 	std::swap(m_capacity, object.m_capacity);
 	std::swap(m_alloc, object.m_alloc);
 	return *this;
-} // теперь во временном объекте наши старые ресурсы => они умрут снаружи
+} // С‚РµРїРµСЂСЊ РІРѕ РІСЂРµРјРµРЅРЅРѕРј РѕР±СЉРµРєС‚Рµ РЅР°С€Рё СЃС‚Р°СЂС‹Рµ СЂРµСЃСѓСЂСЃС‹ => РѕРЅРё СѓРјСЂСѓС‚ СЃРЅР°СЂСѓР¶Рё
 
-// Оператор присваивающего суммирования c матрицей другого типа
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ СЃСѓРјРјРёСЂРѕРІР°РЅРёСЏ c РјР°С‚СЂРёС†РµР№ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 template<typename T, typename Alloc>
 template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator += (const Matrix<Other, Alloc_Other>& object) {
@@ -230,14 +230,14 @@ inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator += (const Matrix<Other, Allo
 		throw std::runtime_error("Error: different shapes for operator +=!");
 	for (size_t row = 0; row < object.m_rows; ++row) {
 		for (size_t col = 0; col < object.m_columns; ++col) {
-			this->operator()(row, col) += static_cast<T>(object(row, col));// Оператор += между типами Т и Other => может выкинуть исключение
-		} // но это не нарушит целостность объекта (размер задан, значения заполнены)
+			this->operator()(row, col) += static_cast<T>(object(row, col));// РћРїРµСЂР°С‚РѕСЂ += РјРµР¶РґСѓ С‚РёРїР°РјРё Рў Рё Other => РјРѕР¶РµС‚ РІС‹РєРёРЅСѓС‚СЊ РёСЃРєР»СЋС‡РµРЅРёРµ
+		} // РЅРѕ СЌС‚Рѕ РЅРµ РЅР°СЂСѓС€РёС‚ С†РµР»РѕСЃС‚РЅРѕСЃС‚СЊ РѕР±СЉРµРєС‚Р° (СЂР°Р·РјРµСЂ Р·Р°РґР°РЅ, Р·РЅР°С‡РµРЅРёСЏ Р·Р°РїРѕР»РЅРµРЅС‹)
 	}
 	return *this;
 }
 
 
-// Оператор присваивающего вычитания c матрицей другого типа
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ РІС‹С‡РёС‚Р°РЅРёСЏ c РјР°С‚СЂРёС†РµР№ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 template<typename T, typename Alloc>
 template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator -= (const Matrix<Other, Alloc_Other>& object) {
@@ -245,32 +245,32 @@ inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator -= (const Matrix<Other, Allo
 		throw std::runtime_error("Error: different shapes for operator -=!");
 	for (size_t row = 0; row < object.m_rows; ++row) {
 		for (size_t col = 0; col < object.m_columns; ++col) {
-			this->operator()(row, col) -= static_cast<T>(object(row, col)); // Оператор -= между типами Т и Other => может выкинуть исключение
-		} // но это не нарушит целостность объекта (размер задан, значения заполнены)
+			this->operator()(row, col) -= static_cast<T>(object(row, col)); // РћРїРµСЂР°С‚РѕСЂ -= РјРµР¶РґСѓ С‚РёРїР°РјРё Рў Рё Other => РјРѕР¶РµС‚ РІС‹РєРёРЅСѓС‚СЊ РёСЃРєР»СЋС‡РµРЅРёРµ
+		} // РЅРѕ СЌС‚Рѕ РЅРµ РЅР°СЂСѓС€РёС‚ С†РµР»РѕСЃС‚РЅРѕСЃС‚СЊ РѕР±СЉРµРєС‚Р° (СЂР°Р·РјРµСЂ Р·Р°РґР°РЅ, Р·РЅР°С‡РµРЅРёСЏ Р·Р°РїРѕР»РЅРµРЅС‹)
 	}
 	return *this;
 }
 
 
-// Оператор присваивающего умножения на число другого типа
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ СѓРјРЅРѕР¶РµРЅРёСЏ РЅР° С‡РёСЃР»Рѕ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 template<typename T, typename Alloc>
 template<typename Other>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator *= (const Other& value) {
 	for (size_t col = 0; col < m_columns; ++col) {
 		for (size_t row = 0; row < m_rows; ++row) {
-			this->operator()(row, col) *= static_cast<T>(value); // Оператор *= между типами Т и Other => может выкинуть исключение
-		} // но это не нарушит целостность объекта (размер задан, значения заполнены)
+			this->operator()(row, col) *= static_cast<T>(value); // РћРїРµСЂР°С‚РѕСЂ *= РјРµР¶РґСѓ С‚РёРїР°РјРё Рў Рё Other => РјРѕР¶РµС‚ РІС‹РєРёРЅСѓС‚СЊ РёСЃРєР»СЋС‡РµРЅРёРµ
+		} // РЅРѕ СЌС‚Рѕ РЅРµ РЅР°СЂСѓС€РёС‚ С†РµР»РѕСЃС‚РЅРѕСЃС‚СЊ РѕР±СЉРµРєС‚Р° (СЂР°Р·РјРµСЂ Р·Р°РґР°РЅ, Р·РЅР°С‡РµРЅРёСЏ Р·Р°РїРѕР»РЅРµРЅС‹)
 	}
 	return *this;
 }
 
-// Оператор присваивающего умножения на матрицу другого типа
+// РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°СЋС‰РµРіРѕ СѓРјРЅРѕР¶РµРЅРёСЏ РЅР° РјР°С‚СЂРёС†Сѓ РґСЂСѓРіРѕРіРѕ С‚РёРїР°
 template<typename T, typename Alloc>
 template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator *= (const Matrix<Other, Alloc_Other>& object) {
 	if (m_columns != object.m_rows)
 		throw std::runtime_error("Error: bad shapes for operator *=!");
-	Matrix obj_new(m_rows, object.m_columns); // пустая матрица, т.е. элементы которой построены с помощью дефолтных конструкторов
+	Matrix obj_new(m_rows, object.m_columns); // РїСѓСЃС‚Р°СЏ РјР°С‚СЂРёС†Р°, С‚.Рµ. СЌР»РµРјРµРЅС‚С‹ РєРѕС‚РѕСЂРѕР№ РїРѕСЃС‚СЂРѕРµРЅС‹ СЃ РїРѕРјРѕС‰СЊСЋ РґРµС„РѕР»С‚РЅС‹С… РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ
 	for (size_t col = 0; col < object.m_columns; ++col) {
 		for (size_t row = 0; row < m_rows; ++row) {
 			for (size_t term = 0; term < m_columns; ++term) {
@@ -278,11 +278,11 @@ inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator *= (const Matrix<Other, Allo
 			}
 		}
 	}
-	*this = std::move(obj_new); // теперь в obj_new наши старые ресурсы, которые "умрут" при выходе из тела оператора
+	*this = std::move(obj_new); // С‚РµРїРµСЂСЊ РІ obj_new РЅР°С€Рё СЃС‚Р°СЂС‹Рµ СЂРµСЃСѓСЂСЃС‹, РєРѕС‚РѕСЂС‹Рµ "СѓРјСЂСѓС‚" РїСЂРё РІС‹С…РѕРґРµ РёР· С‚РµР»Р° РѕРїРµСЂР°С‚РѕСЂР°
 	return *this;
 }
 
-// оператор вызова функции (принимает два аргумента будто [i][j])
+// РѕРїРµСЂР°С‚РѕСЂ РІС‹Р·РѕРІР° С„СѓРЅРєС†РёРё (РїСЂРёРЅРёРјР°РµС‚ РґРІР° Р°СЂРіСѓРјРµРЅС‚Р° Р±СѓРґС‚Рѕ [i][j])
 template<typename T, typename Alloc>
 inline T& Matrix<T, Alloc>::operator() (size_t row, size_t column) {
 	if (!m_ptr) throw std::runtime_error("Error: operator () asked for element of empty matrix!");
@@ -291,7 +291,7 @@ inline T& Matrix<T, Alloc>::operator() (size_t row, size_t column) {
 	return m_ptr[row * m_columns + column];
 }
 
-// оператор вызова функции для константной матрицы
+// РѕРїРµСЂР°С‚РѕСЂ РІС‹Р·РѕРІР° С„СѓРЅРєС†РёРё РґР»СЏ РєРѕРЅСЃС‚Р°РЅС‚РЅРѕР№ РјР°С‚СЂРёС†С‹
 template<typename T, typename Alloc>
 inline const T& Matrix<T, Alloc>::operator() (size_t row, size_t column) const {
 	if (!m_ptr) throw std::runtime_error("Error: operator () asked for element of empty matrix!");
