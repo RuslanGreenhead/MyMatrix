@@ -125,7 +125,10 @@ template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>::Matrix(const Matrix<Other, Alloc_Other>& object) {
 	const size_t rows = object.get_rows();
 	const size_t columns = object.get_columns();
+
 	T* ptr_temp = m_alloc.allocate(rows * columns); // Просто выделили память
+
+
 	size_t i = 0; // глобальный индекс (чтобы вне try использовать)
 	try { // с помощью него буду отслеживать на каком я конструкторе
 		for (size_t row = 0; row < rows; ++row) {

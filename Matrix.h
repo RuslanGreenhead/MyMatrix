@@ -73,6 +73,25 @@ public:
 	T& operator() (size_t row, size_t column); // оператор вызова функции (принимает два аргумента будто [i][j])
 	const T& operator() (size_t row, size_t column) const; // оператор вызова функции для константной матрицы
 
+    T det()const;
+
+    Matrix minor(const int i, const int k) const;
+
+    int rank() const;
+
+    double norm() const;
+
+    double  trace () const;
+
+    template <typename T1, typename Alloc_1>
+    Matrix<T1, Alloc_1> friend transpose (const Matrix<T1, Alloc_1> &obj);
+
+    template <typename T1, typename Alloc_1>
+    auto  friend inv (const Matrix<T1, Alloc_1> &obj);
+
+    template <typename T1, typename Alloc_1>
+    Matrix<T1, Alloc_1>  friend pow (const Matrix<T1, Alloc_1> &obj,  size_t number );
+
 private:
 	T* m_ptr = nullptr;
 	size_t m_rows = 0, m_columns = 0;
@@ -81,3 +100,5 @@ private:
 };
 
 #include "Matrix.hpp" // там находятся все реализации
+#include "Matrix_utilites.hpp"
+#include "Matrix_utilites_additional.hpp"
