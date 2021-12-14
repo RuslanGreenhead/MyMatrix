@@ -14,4 +14,6 @@ add_executable(Lab_2
         Matrix.h
         Matrix.hpp
         Matrix_utilites.hpp
-        Matrix_utilities.h)
+        Matrix_utilities.h
+        Matrix_utilites_additional.hpp
+        Matrix_utilites_additional.h)
