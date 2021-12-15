@@ -73,14 +73,22 @@ public:
 	T& operator() (size_t row, size_t column); // оператор вызова функции (принимает два аргумента будто [i][j])
 	const T& operator() (size_t row, size_t column) const; // оператор вызова функции для константной матрицы
 
+    //----------------------------|лин-ал методы|-----------------------------------------------
+
+    // считает детерминант рекурсивно
+    // раскладывая по 1ому столбцу
     T det()const;
 
+    // считает минор для указанного элемента
     Matrix minor(const int i, const int k) const;
 
+    // считает ранг приведением к верхнему треугольному виду
     int rank() const;
 
+    // считает норму Фибиуса
     double norm() const;
 
+    // считает след матрицы
     double  trace () const;
 
     template <typename T1, typename Alloc_1>
