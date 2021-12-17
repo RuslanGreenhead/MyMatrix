@@ -6,8 +6,11 @@
 #include <stdlib.h>
 
 int main() {
-	test_1();
-//  cout << Complex<>(3, 3) << endl;
+//	test_1();
+//    test_2();
+    test_3();
+
+
 //	system("pause");
 
 	return 0;

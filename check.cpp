@@ -49,21 +49,41 @@ void test_1(){
 void test_2(){
     Matrix<int> m5 { {13, 4, 0}, {0, 3, 0},{0, 0, -8}};
     Matrix<double> m6 { {13.0, 4.0, 0.0}, {0.0, 3.0, 0.0},{0.0, 0.0, -8.0}};
+    Matrix<double> m7 { {13.1, 4.0, 0.0}, {0.0, 3.0, 0.0},{0.0, 0.0, -8.0}};
 
-    cout <<m5 << m6 << int(m5 == m6)<< endl;
+    cout  << "result of int(m5 == m6):"<< int(m5 == m6)<< endl;
+    cout  << "result of int(m5 == m7):"<< int(m5 == m7)<< endl;
 
-    cout << int (inv(transpose(m6)) == transpose(inv(m6)))<< endl;
+    cout << "result of inv(transpose(m6)) == transpose(inv(m6)):" << int (inv(transpose(m6)) == transpose(inv(m6)))<< endl;
 
-    cout << int (inv(m6 * m5) == inv(m6) * inv(m5))<< endl;};
+    cout << "result of int (inv(m6 * m5) == inv(m6) * inv(m5))):"<< int (inv(m6 * m5) == inv(m6) * inv(m5))<< endl;};
 
 //  методы и функции на вектора
 void test_3(){
-    Matrix<int> m1  {1, 2, 3};
-    Matrix<> m2  {0.0, 2.3, 0.0};
+    Matrix<int> m1  {1, 1, 1};
+    Matrix<> m2  {1.1, 2.2, 3.3};
 
+    cout << "m1.norm()"<< std::endl;
+    cout << m1.norm()<< std::endl;
+
+    cout << "angle(m1, m2)"<< std::endl;
+    cout << angle(m1, m2)<< std::endl;
+
+    cout << "multy_vector(m1, m2)"<< std::endl;
+    cout << multy_vector(m1, m2)<< std::endl;
+
+    cout << "multy_scalar(m1, m2)"<< std::endl;
+    cout << multy_scalar(m1, m2)<< std::endl;
+
+    cout << "unit(m1)"<< std::endl;
+    cout << unit(m1)<< std::endl;
 
 };
-void test_4();
+
+// СЛАУ
+void test_4(){
+
+};
 void test_5();
 void test_6();
 void test_7();
