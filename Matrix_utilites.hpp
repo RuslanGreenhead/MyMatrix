@@ -3,6 +3,7 @@
 #include <iomanip> // input output manipulations
 #include <sstream> // чтобы работать со строками через интерфейс потоков
 
+
 const int g_interval = 2; // кол-во пробелов между элементами
 
 // смотрит из каких символов состоит каждый элемент первого столбца матрицы при выводе в поток и возвращает наибольшее кол-во символов.
@@ -53,6 +54,7 @@ std::ostream& operator << (std::ostream& out, const Matrix<T, Alloc>& object) {
 		out << "|\n";
 		//if (row != object.get_rows() - 1) out << '\n'; // если строка не последняя, сделай отступ
 	}
+    out << "\n";
 	return out;
 }
 
