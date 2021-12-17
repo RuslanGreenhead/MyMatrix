@@ -1,16 +1,14 @@
-#include <iostream>
+
 
 #include "complex_hpp.hpp"
-using namespace std;
+#include "check.h"
 
+#include <stdlib.h>
 
-
-
-
-int main()
-{
-
-	cout << Complex<>(3, 3) << endl;
+int main() {
+	test_1();
+  cout << Complex<>(3, 3) << endl;
+	system("pause");
 
 	return 0;
 }
