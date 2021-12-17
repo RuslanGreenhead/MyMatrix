@@ -97,6 +97,12 @@
 		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilites.hpp">
 			<Option target="Lab_2"/>
 		</Unit>
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.h">
+			<Option target="Lab_2"/>
+		</Unit>
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.hpp">
+			<Option target="Lab_2"/>
+		</Unit>
 		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilities.h">
 			<Option target="Lab_2"/>
 		</Unit>

@@ -17,6 +17,10 @@ Allocator.h
 /Users/fedor/CLionProjects/Lab_2/Allocator.h
 Matrix.hpp
 /Users/fedor/CLionProjects/Lab_2/Matrix.hpp
+Matrix_utilites.hpp
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilites.hpp
+Matrix_utilites_additional.hpp
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.hpp
 
 /Users/fedor/CLionProjects/Lab_2/Matrix.hpp
 Matrix.h
@@ -28,6 +32,20 @@ iomanip
 sstream
 -
 
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.h
+Matrix.h
+/Users/fedor/CLionProjects/Lab_2/Matrix.h
+Matrix_utilities.h
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilities.h
+Matrix_utilites_additional.hpp
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.hpp
+
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.hpp
+cmath
+-
+limits
+-
+
 /Users/fedor/CLionProjects/Lab_2/Matrix_utilities.h
 Matrix.h
 /Users/fedor/CLionProjects/Lab_2/Matrix.h
@@ -37,18 +55,12 @@ Matrix_utilites.hpp
 /Users/fedor/CLionProjects/Lab_2/check.cpp
 Matrix_utilities.h
 /Users/fedor/CLionProjects/Lab_2/Matrix_utilities.h
+Matrix_utilites_additional.h
+/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.h
 Allocator_other.h
 /Users/fedor/CLionProjects/Lab_2/Allocator_other.h
 iostream
 -
 string
--
-
-/Users/fedor/CLionProjects/Lab_2/check.h
-
-/Users/fedor/CLionProjects/Lab_2/main.cpp
-check.h
-/Users/fedor/CLionProjects/Lab_2/check.h
-stdlib.h
 -
 
