@@ -153,4 +153,22 @@ for (size_t i =0; i < number - 1; i++){
 }
     return result;
 }
+
+template <typename T1, typename Alloc_1, typename T2, typename Alloc_2>
+auto  solve (const Matrix<T1, Alloc_1> &mat,  const Matrix<T2, Alloc_2> &vec){
+
+    // проверка на то что вектор это вектор
+    // проверка на соответствие размеров
+    // проверка на дет == 0
+
+Matrix<> temp (mat);
+Matrix<> result (mat.m_columns, 1);
+double determ = temp.det();
+
+for (int i =0;i < mat.m_columns; ++i){
+    for (int j = 0; j < mat.m_rows; ++j) {temp(i,j) = vec(i,j);}
+    result(i,1) = temp.det() / determ;
+}
+    return result;
+}
 //(row, ,column)
