@@ -31,7 +31,7 @@ template<typename Other>
 inline Matrix<T, Alloc>::Matrix(std::initializer_list<Other> init_list, Alloc alloc)
 	: m_alloc(alloc)
 {
-	typedef std::initializer_list<Other>::const_iterator const_iter;
+	typedef typename std::initializer_list<Other>::const_iterator const_iter;
 	T* ptr_temp = m_alloc.allocate(init_list.size()); // Просто выделили память
 	size_t i = 0; // глобальный индекс (чтобы вне try использовать) 
 	try { // с помощью него буду отслеживать на каком я конструкторе
@@ -125,7 +125,10 @@ template<typename Other, typename Alloc_Other>
 inline Matrix<T, Alloc>::Matrix(const Matrix<Other, Alloc_Other>& object) {
 	const size_t rows = object.get_rows();
 	const size_t columns = object.get_columns();
+
 	T* ptr_temp = m_alloc.allocate(rows * columns); // Просто выделили память
+
+
 	size_t i = 0; // глобальный индекс (чтобы вне try использовать)
 	try { // с помощью него буду отслеживать на каком я конструкторе
 		for (size_t row = 0; row < rows; ++row) {
@@ -170,7 +173,37 @@ inline Matrix<T, Alloc>::~Matrix()noexcept {
 template<typename T, typename Alloc>
 inline Matrix<T, Alloc>& Matrix<T, Alloc>::operator = (const Matrix& object) {
 	if (m_ptr == object.m_ptr) return *this; // Проверка на самоприсваивание
-	this->operator=<T, Alloc>(object);
+    if (object.size() > m_capacity) { // придётся перевыделять память
+        *this = Matrix(object); // скопировали объект во временный и своровали у него ресурсы с помощью перемещения
+        // теперь старые ресурсы нашего класса у временного и они подчистятся, когда закончится инструкция (т.е. уже тут)
+    }
+    else { // иначе: вместимости моей матрицы хватит на актуальный размер объекта
+        size_t i = 0; // с помощью этого индекса пройдёмся по всем элементам
+        if (size() <= object.size()) { // т.е. актуальный размер имеющейся матрицы увеличится или не изменится
+            for (; i < size(); ++i)
+                m_ptr[i] = static_cast<T>(object.m_ptr[i]); // присваивание может выкинуть исключение, но это не нарушит целостность объекта
+            try { // нужно проконтролировать работу конструкторов у новых объектов
+                for (; i < object.size(); ++i)
+                    m_alloc.construct(m_ptr + i, static_cast<T>(object.m_ptr[i]));
+            }
+            catch (...) { // если при создании новых объектов вылетело исключение, то эти новые надо разрушить
+                for (size_t j = size(); j != i; ++j)
+                    m_alloc.destroy(m_ptr + j); // запуск деструкторов
+                throw;
+            }
+        }
+        else { // т.е. актуальный размер имеющейся матрицы уменьшится
+            for (; i < object.size(); ++i)
+                m_ptr[i] = static_cast<T>(object.m_ptr[i]);
+            for (; i < size(); ++i) // не нужно контролировать работу деструкторов т.к. они не должны выкидывать исключения
+                m_alloc.destroy(m_ptr + i); // разрушим не нужные нам элементы
+        }
+        // актуальные размеры матрицы изменились:
+        m_rows = object.get_rows();
+        m_columns = object.get_columns();
+        // НО capactiy не изменилось т.к. память не перевыделяли
+    }
+    return *this;
 }
 
 // Оператор присваивания копирующий от матрицы другого типа

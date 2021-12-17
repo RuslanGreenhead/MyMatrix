@@ -53,6 +53,7 @@ std::ostream& operator << (std::ostream& out, const Matrix<T, Alloc>& object) {
 		out << "|\n";
 		//if (row != object.get_rows() - 1) out << '\n'; // если строка не последняя, сделай отступ
 	}
+    out << "\n";
 	return out;
 }
 

@@ -9,7 +9,7 @@ public:
 	template<typename Other, typename Alloc_Other> friend class Matrix; // Подружились с такими матрицами, чтобы пользоваться их внутренностями
 
 	// Дефолтный конструктор
-	explicit Matrix() noexcept {}
+	explicit Matrix() noexcept {};
 
 	// Конструктор с 2 параметрами (матрица) c 1 параметром (вектор)
 	explicit Matrix(const size_t rows, const size_t columns = 1, Alloc alloc = Alloc()); 
@@ -73,6 +73,36 @@ public:
 	T& operator() (size_t row, size_t column); // оператор вызова функции (принимает два аргумента будто [i][j])
 	const T& operator() (size_t row, size_t column) const; // оператор вызова функции для константной матрицы
 
+    //----------------------------|лин-ал методы|-----------------------------------------------
+
+    // считает детерминант рекурсивно
+    // раскладывая по 1ому столбцу
+    T det()const;
+
+    // считает минор для указанного элемента
+    Matrix minor(const int i, const int k) const;
+
+    // считает ранг приведением к верхнему треугольному виду
+    int rank() const;
+
+    // считает норму Фибиуса
+    double norm() const;
+
+    // считает след матрицы
+    double  trace () const;
+
+    template <typename T1, typename Alloc_1>
+    Matrix<T1, Alloc_1> friend transpose (const Matrix<T1, Alloc_1> &obj);
+
+    template <typename T1, typename Alloc_1>
+    auto  friend inv (const Matrix<T1, Alloc_1> &obj);
+
+    template <typename T1, typename Alloc_1>
+    Matrix<T1, Alloc_1>  friend pow (const Matrix<T1, Alloc_1> &obj,  size_t number );
+
+    template <typename T1, typename Alloc_1, typename T2, typename Alloc_2>
+    auto friend solve (const Matrix<T1, Alloc_1> &mat,  const Matrix<T2, Alloc_2> &vec);
+
 private:
 	T* m_ptr = nullptr;
 	size_t m_rows = 0, m_columns = 0;
@@ -81,3 +111,5 @@ private:
 };
 
 #include "Matrix.hpp" // там находятся все реализации
+#include "Matrix_utilites.hpp"
+#include "Matrix_utilites_additional.hpp"
