@@ -4,6 +4,7 @@
 CMakeFiles/Lab_2.dir/check.cpp.o: \
  ../Allocator.h \
  ../Allocator_other.h \
+ ../LinAlgError.h \
  ../Matrix.h \
  ../Matrix.hpp \
  ../Matrix_utilites.hpp \

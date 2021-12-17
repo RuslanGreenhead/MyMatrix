@@ -15,5 +15,6 @@ add_executable(Lab_2
         Matrix.hpp
         Matrix_utilites.hpp
         Matrix_utilities.h
+        LinAlgError.h
         Matrix_utilites_additional.hpp
         Matrix_utilites_additional.h)

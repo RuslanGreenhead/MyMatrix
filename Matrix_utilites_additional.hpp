@@ -5,6 +5,8 @@
 #include "LinAlgError.h"
 using std::runtime_error;
 
+// --------------------------------------|Матрицы|---------------------------------------
+
 template <typename T, typename Alloc>
 T Matrix<T, Alloc>::det()const {
     if(m_rows != m_columns)  throw LinAlgError("Is not a square matrix, cannot find Det", 10);
@@ -205,7 +207,6 @@ bool operator==(const Matrix<T1, Alloc_1> &right,  const Matrix<T2, Alloc_2> &le
 
 //----------------------------------------|вектора|-----------------------------------------------
 
-
 #include<math.h>
 //Евклидова норма
 template<typename T, typename Alloc> // Оператор перемножения матрицы на число (разных типов)
@@ -220,6 +221,7 @@ double norm(const Matrix<T, Alloc>& obj)
     return pow(norma, 0.5);
 }
 
+//Скалярное умножение
 template<typename T1, typename A1, typename T2, typename A2>
 double multy_scalar(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)
 {
@@ -236,12 +238,14 @@ double multy_scalar(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)
     return scal;
 }
 
+// нахождение угла между векторами
 template<typename T1, typename A1, typename T2, typename A2>
 double angle(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)
 {
     return acos(multy_scalar(obj1, obj2) / ((norm(obj1) * norm(obj2))));
 }
 
+// векторное умножение векторов
 template<typename T1, typename A1, typename T2, typename A2>
 auto multy_vector(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2) ->Matrix<decltype(T1()* T2())>
 {
@@ -259,6 +263,7 @@ auto multy_vector(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2) ->Matr
     return temp;
 }
 
+// нормализация вектора
 template<typename T, typename Alloc>
 auto unit(const Matrix<T, Alloc>& obj) -> Matrix<decltype(T()* double())>
 {

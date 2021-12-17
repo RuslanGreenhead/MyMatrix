@@ -88,6 +88,9 @@
 		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Allocator_other.h">
 			<Option target="Lab_2"/>
 		</Unit>
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/LinAlgError.h">
+			<Option target="Lab_2"/>
+		</Unit>
 		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix.h">
 			<Option target="Lab_2"/>
 		</Unit>

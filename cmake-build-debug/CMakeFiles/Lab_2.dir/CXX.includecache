@@ -10,6 +10,8 @@
 
 /Users/fedor/CLionProjects/Lab_2/Allocator_other.h
 
+/Users/fedor/CLionProjects/Lab_2/LinAlgError.h
+
 /Users/fedor/CLionProjects/Lab_2/Matrix.h
 iostream
 -
@@ -44,6 +46,10 @@ Matrix_utilites_additional.hpp
 cmath
 -
 limits
+-
+LinAlgError.h
+/Users/fedor/CLionProjects/Lab_2/LinAlgError.h
+math.h
 -
 
 /Users/fedor/CLionProjects/Lab_2/Matrix_utilities.h

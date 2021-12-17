@@ -20,9 +20,12 @@ auto inv(const Matrix<T1, Alloc_1> &obj);
 template <typename T, typename Alloc>
 Matrix<T, Alloc>  pow (const Matrix<T, Alloc> &obj,  size_t number);
 
+// решает СЛАУ, где коэф-фы заданы матрицей mat
+// столбец свободных членов - vec
 template <typename T1, typename Alloc_1, typename T2, typename Alloc_2>
 auto  solve (const Matrix<T1, Alloc_1> &mat,  const Matrix<T2, Alloc_2> &vec);
 
+// сравнивает матрицы поэлементно, если они равного размера
 template <typename T1, typename Alloc_1, typename T2, typename Alloc_2>
 bool operator==(const Matrix<T1, Alloc_1> &right,  const Matrix<T2, Alloc_2> &left);
 
@@ -42,7 +45,6 @@ double angle(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2);
 //Векторное произведение
 template<typename T1, typename A1, typename T2, typename A2>
 auto multy_vector(const Matrix<T1, A1>& obj1, const Matrix<T2, A2>& obj2)->Matrix<decltype(T1()* T2())>;
-#include "Matrix_utilites.hpp" // там находятся все реализации
 
 //Вектор единичный
 template<typename T, typename Alloc>
