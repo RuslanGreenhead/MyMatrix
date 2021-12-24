@@ -1,2 +1,2 @@
-# Matrix_class
+# MyMatrix
 Implementation of matrix in C++
