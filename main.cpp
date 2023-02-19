@@ -1,14 +1,18 @@
-
-
-#include "complex_hpp.hpp"
+#include "Complex.hpp"
 #include "check.h"
 
 #include <stdlib.h>
 
 int main() {
-	test_1();
-//  cout << Complex<>(3, 3) << endl;
-//	system("pause");
+//	test_1();
+//  test_2();
+//  test_3();
+//  test_4();
+//  test_5();
+//  test_6();
+  test_7();
+//  test_8();
 
-	return 0;
+//	system("pause");
+    return 0;
 }

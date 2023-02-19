@@ -1,3 +1,7 @@
+//
+// Matrix additional utilities implementations
+//
+
 #pragma once
 
 #include <cmath>
@@ -7,11 +11,14 @@
 using std::runtime_error;
 using namespace linalg;
 
+//----------------------------------------- Matrices -----------------------------------------
+
 namespace linalg {
+
     template<typename T, typename Alloc>
     T Matrix<T, Alloc>::det() const {
+        if (m_rows == 1 && m_columns == 1){ return (*this)(0, 0);}
         if (m_rows != m_columns) throw LinAlgError("Is not a square matrix, cannot find Det", 10);
-
         if ((m_columns == 2) && (m_rows == 2)) {
             return (*this)(0, 0) * (*this)(1, 1) - (*this)(1, 0) * (*this)(0, 1);
         }
@@ -20,24 +27,23 @@ namespace linalg {
 
         for (int i = 0; i < m_rows; i++) {
             determinant += pow(-1, i) * (*this)(i, 0) * (*this).minor(i, 0).det();
-        };
-
+        }
 
         return determinant;
     }
 
     template<typename T, typename Alloc>
-    Matrix<T, Alloc> Matrix<T, Alloc>::minor(const int row, const int column) const {
+    Matrix<T, Alloc> Matrix<T, Alloc>::minor (const int row, const int column) const {
 
         if (m_rows <= row) throw LinAlgError("Wrong row of element for taking minor ", 11);
         if (m_columns <= column) throw LinAlgError("Wrong column of element for taking minor ", 12);
 
-        Matrix<T> result(m_columns - 1, m_rows - 1);
+        Matrix<T> res(m_rows - 1, m_columns - 1);
 
         int index_i = 0, index_k;
 
-        for (int i = 0; i < result.m_rows; i++) {
-            for (int k = 0; k < result.m_columns; k++) {
+        for (int i = 0; i < res.m_rows; i++) {
+            for (int k = 0; k < res.m_columns; k++) {
 
                 if (i >= row) index_i = 1;
                 else index_i = 0;
@@ -45,34 +51,28 @@ namespace linalg {
                 if (k >= column) index_k = 1;
                 else index_k = 0;
 
-
-                (*this)(index_i, index_k);
-                result(i, k);
-                result(i, k) = (*this)(i + index_i, k + index_k);
+                res(i, k) = (*this)(i + index_i, k + index_k);
 
                 ++index_i;
                 ++index_k;
             }
         }
-
-
-        return result;
+        return res;
     }
 
     template<typename T, typename Alloc>
     int Matrix<T, Alloc>::rank() const {
         Matrix<decltype(T() + double())> temp((*this));
-        T result = 0;
+
+        T res = 0;
 
         for (int i = 0; i < temp.m_rows; i++) {
-
-
             for (int k = 0; k < temp.m_columns; k++) {
-                try {
+                try{
                     if ((*this)(i, i) == 0) throw std::runtime_error("O");
                     temp(i, k) = temp(i, k) / (*this)(i, i);
                 }
-                catch (runtime_error err) {
+                catch (runtime_error& err) {
                     for (int h = i; h < temp.m_columns; h++) {
                         if (temp(i, h) != 0) {
                             for (int m = i; m < temp.m_rows; m++) {
@@ -86,7 +86,6 @@ namespace linalg {
                 }
             }
 
-
             for (int k = i; k < temp.m_rows; k++) {
                 for (int j = i; j < temp.m_rows; j++) {
                     if ((i != k) && (i != 100)) temp(k, j) = temp(k, j) - temp(i, j) * temp(k, i);
@@ -95,10 +94,9 @@ namespace linalg {
         }
 
         for (int i = 0; i < temp.m_rows; i++) {
-            if (temp(i, i) != 0) ++result;
+            if (temp(i, i) != 0) ++res;
         }
-
-        return result;
+        return res;
     }
 
     template<typename T, typename Alloc>
@@ -110,8 +108,6 @@ namespace linalg {
                 result += (*this)(i, k) * (*this)(i, k);
             }
         }
-
-
         return pow(result, 0.5);
     }
 
@@ -128,33 +124,31 @@ namespace linalg {
 
     template<typename T1, typename Alloc>
     Matrix<T1, Alloc> transpose(const Matrix<T1, Alloc> &obj) {
-        Matrix<T1> result(obj.m_columns, obj.m_rows);
+        Matrix<T1> res(obj.m_columns, obj.m_rows);
 
         for (int i = 0; i < obj.m_rows; i++) {
             for (int k = 0; k < obj.m_columns; k++) {
-                result(i, k) += obj(k, i);
+                res(i, k) += obj(k, i);
             }
         }
 
-        return result;
+        return res;
     }
 
     template<typename T1, typename Alloc_1>
     auto inv(const Matrix<T1, Alloc_1> &obj) {
-
         if (obj.m_rows != obj.m_columns) throw LinAlgError("Is not a square matrix, cannot find inv matrix", 12);
-        double determ = obj.det();
-        if (determ == 0) throw LinAlgError("Det = 0, There is no inv matrix", 13);
+        double determinant = obj.det();
+        if (determinant == 0) throw LinAlgError("Det = 0, There is no inv matrix", 13);
 
-        Matrix<decltype(double() + T1())> result(obj);
+        Matrix<decltype(double() + T1())> res(obj);
 
         for (int i = 0; i < obj.m_rows; ++i) {
             for (int k = 0; k < obj.m_columns; ++k) {
-                result(i, k) = pow(-1, i + k) * transpose(obj).minor(i, k).det() / determ;
+                res(i, k) = pow(-1, i + k) * transpose(obj).minor(i, k).det() / determinant;
             }
         }
-
-        return result;
+        return res;
     }
 
     template<typename T, typename Alloc>
@@ -167,31 +161,29 @@ namespace linalg {
         return result;
     }
 
-    template<typename T1, typename Alloc_1, typename T2, typename Alloc_2>
-    auto solve(const Matrix<T1, Alloc_1> &mat, const Matrix<T2, Alloc_2> &vec) {
+    template <typename T1, typename Alloc_1, typename T2, typename Alloc_2>
+    auto solve (const Matrix<T1, Alloc_1> &mat, const Matrix<T2, Alloc_2> &vec){
 
         if (vec.get_columns() != 1) throw LinAlgError("It's not a vector, cannot resolve equalization", 14);
         if (vec.m_rows != mat.m_rows) throw LinAlgError("Different row amounts, cannot resolve equalization", 15);
-        if (mat.m_rows != mat.m_columns)
-            throw LinAlgError("Not square matrix provides not normal system, cannot resolve equalization", 16);
-        double determ = mat.det();
-        if (determ == 0) throw LinAlgError("Det = 0, cannot resolve equalization", 17);
+        if(mat.m_rows != mat.m_columns) throw LinAlgError("Not square matrix provides not normal system, cannot resolve equalization", 16);
+        double determinant = mat.det();
+        if(determinant == 0) throw LinAlgError("Det = 0, cannot resolve equalization", 17);
 
+        Matrix<> temp (mat);
+        Matrix<> res (mat.m_columns, 1);
 
-        Matrix<> temp(mat);
-        Matrix<> result(mat.m_columns, 1);
+        for (int i =0;i < mat.m_columns; ++i){
+            for (int j = 0; j < mat.m_rows; ++j) {temp(j,i) = vec(j,0);}
 
-        for (int i = 0; i < mat.m_columns; ++i) {
-            for (int j = 0; j < mat.m_rows; ++j) { temp(i, j) = vec(i, j); }
-            result(i, 1) = temp.det() / determ;
+            res(i, 0) = temp.det() / determinant;
+            for (int j = 0; j < mat.m_rows; ++j) {temp(j,i) = mat(j,i);}
         }
-        return result;
+        return res;
     }
 
-
     template<typename T1, typename Alloc_1, typename T2, typename Alloc_2>
-    bool operator==(const Matrix<T1, Alloc_1> &right, const Matrix<T2, Alloc_2> &left) {
-
+    bool operator == (const Matrix<T1, Alloc_1> &right, const Matrix<T2, Alloc_2> &left) {
         typedef decltype(T1() + T2()) T3;
         if ((right.m_rows != left.m_rows) || (right.m_columns != left.m_columns)) {
             throw LinAlgError("Not equal sizes, operation == can not be done", 18);
@@ -200,29 +192,27 @@ namespace linalg {
         for (int i = 0; i < right.m_rows; i++) {
             for (int k = 0; k < right.m_columns; k++) {
                 if (std::fabs(T3(right(i, k)) - T3(left(i, k))) >= std::numeric_limits<double>::epsilon()) {
-                    return 0;
+                    return false;
                 }
             }
         }
-        return 1;
+        return true;
     }
 }
-//----------------------------------------|векторы|-----------------------------------------------
 
+//----------------------------------------- Vectors -----------------------------------------
 
-#include<math.h>
+#include<cmath>
 
 namespace linalg {
-//Евклидова норма
+
     template<typename T, typename Alloc>
-    // Оператор перемножения матрицы на число (разных типов)
     double norm(const Matrix<T, Alloc> &obj) {
         if (obj.get_columns() != 1)
-            throw LinAlgError("Is not a vector, normalization is impossible",
-                              1);// тут должна быть проверка линилж еррор на то что это вектор, те либо столбцы либо строки равны 1
+            throw LinAlgError("Is not a vector, normalization is impossible", 1);// тут должна быть проверка линилж еррор на то что это вектор, те либо столбцы либо строки равны 1
         double norma = 0;
         for (int i = 0; i < obj.get_rows(); ++i) {
-            norma += pow(obj(i, 0), 2);
+            norma += std::pow(obj(i, 0), 2);
         }
         return std::pow(norma, 0.5);
     }
@@ -234,7 +224,6 @@ namespace linalg {
         if (obj1.get_rows() != obj2.get_rows())
             throw LinAlgError("Number of rows is not equal, scalar multiplication is impossible", 4);
 
-        //проверка на вектор и  совпадение колва строк
         double scal = 0;
         for (int i = 0; i < obj1.get_rows(); ++i) {
             scal += obj1(i, 0) * obj2(i, 0);
@@ -257,7 +246,6 @@ namespace linalg {
         if (obj2.get_rows() != 3)
             throw LinAlgError("Dimension vector obj3 is not 3, vector multiplication is impossible", 8);
 
-        //проверка на вектора и что вектора размерности три
         for (int i = 0; i < obj1.get_rows(); ++i) {
             temp(i, 0) = obj1((1 + i) % 3, 0) * obj2((2 + i) % 3, 0) - obj1((2 + i) % 3, 0) * obj2((1 + i) % 3, 0);
         }
@@ -267,8 +255,7 @@ namespace linalg {
     template<typename T, typename Alloc>
     auto unit(const Matrix<T, Alloc> &obj) -> Matrix<decltype(T() * double())> {
         if (int a = obj.get_columns() != 1)
-            throw LinAlgError("Is not a vector, cannot find unit vector",
-                              9);// тут должна быть проверка линилж еррор на то что это вектор, те либо столбцы либо строки равны 1
+            throw LinAlgError("Is not a vector, cannot find unit vector", 9);// тут должна быть проверка линилж еррор на то что это вектор, те либо столбцы либо строки равны 1
         double koef = (1.0 / norm(obj));
         Matrix<decltype(T() * double())> temp = obj * koef;
         return temp;

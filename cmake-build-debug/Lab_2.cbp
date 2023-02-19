@@ -8,114 +8,117 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug"/>
+				<Option working_dir="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Lab_2">
-				<Option output="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Lab_2.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="C:/Users/molok/CLionProjects/Matrix_Advanced_New/."/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 Lab_2"/>
-					<CompileFile command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Lab_2/fast">
-				<Option output="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Lab_2.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="C:/Users/molok/CLionProjects/Matrix_Advanced_New/."/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
-					<Add directory="C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 Lab_2/fast"/>
-					<CompileFile command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug"/>
+				<Option working_dir="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/MINGW-~1/X86_64~1.0-P/mingw64/bin/mingw32-make.exe -f &quot;C:/Users/molok/CLionProjects/Matrix_Advanced_New/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lab_2">
+				<Option output="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Lab_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/fedor/CLionProjects/Lab_2/."/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Lab_2"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Lab_2/fast">
+				<Option output="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Lab_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/fedor/CLionProjects/Lab_2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/fedor/CLionProjects/Lab_2/."/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Lab_2/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/fedor/CLionProjects/Lab_2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Allocator.h">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Allocator.h">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Allocator_other.h">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Allocator_other.h">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Matrix.h">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix.h">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Matrix.hpp">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix.hpp">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Matrix_utilites.hpp">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilites.hpp">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Matrix_utilites_additional.h">
+<<<<<<<<< Temporary merge branch 1
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.h">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Matrix_utilites_additional.hpp">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilites_additional.hpp">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/Matrix_utilities.h">
+=========
+>>>>>>>>> Temporary merge branch 2
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/Matrix_utilities.h">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/check.cpp">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/check.cpp">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/check.h">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/check.h">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/main.cpp">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/main.cpp">
 			<Option target="Lab_2"/>
 		</Unit>
-		<Unit filename="C:/Users/molok/CLionProjects/Matrix_Advanced_New/CMakeLists.txt">
+		<Unit filename="/Users/fedor/CLionProjects/Lab_2/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
